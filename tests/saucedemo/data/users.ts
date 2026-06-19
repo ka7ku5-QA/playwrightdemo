@@ -23,6 +23,16 @@ export const users: { [key:string]: User } = {
             lastName: "Creds"
         },
     },
+    noCredentials: {
+        credentials: {
+            username: "",
+            password: ""
+        },
+        account: {
+            firstName: "No",
+            lastName: "Creds"
+        },
+    },
 
     lockedOutUser: {
         credentials: {
