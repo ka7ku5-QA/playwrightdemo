@@ -5,9 +5,10 @@ export type Credentials = {
 export type Account = {
   firstName: string;
   lastName: string;
+  zipCode: string;
 }
 
 export type User = {
   credentials: Credentials;
-  account: Account
+  account: Account;
 }

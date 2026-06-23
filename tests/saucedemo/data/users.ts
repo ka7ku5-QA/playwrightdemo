@@ -10,7 +10,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "standard",
-            lastName: "User"
+            lastName: "User",
+            zipCode: '12345',
         },
     },
     incorrectCredentials: {
@@ -20,7 +21,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "Incorrect",
-            lastName: "Creds"
+            lastName: "Creds",
+            zipCode: ""
         },
     },
     noCredentials: {
@@ -30,7 +32,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "No",
-            lastName: "Creds"
+            lastName: "Creds",
+            zipCode: ""
         },
     },
 
@@ -41,7 +44,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "locked_out",
-            lastName: "User"
+            lastName: "User",
+            zipCode: ""
         },
     },
     problemUser: {
@@ -51,7 +55,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "Problem",
-            lastName: "User"
+            lastName: "User",
+            zipCode: ""
         },
     },
     performanceGlitchUser: {
@@ -61,7 +66,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "Performance_glitch",
-            lastName: "User"
+            lastName: "User",
+            zipCode: ""
         },
     },
     errorUser: {
@@ -71,7 +77,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "Error",
-            lastName: "User"
+            lastName: "User",
+            zipCode: ""
         },
     },
     visualUser: {
@@ -81,7 +88,8 @@ export const users: { [key:string]: User } = {
         },
         account: {
             firstName: "Visual",
-            lastName: "User"
+            lastName: "User",
+            zipCode: ""
         },
     }
 }
