@@ -1,9 +1,11 @@
 import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login';
+import { ShoppingPage } from '../pages/shopping'
 import { config } from '../config'
 
 type MyFixtures = {
   loginPage: LoginPage;
+  shoppingPage: ShoppingPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -12,6 +14,11 @@ export const test = base.extend<MyFixtures>({
     await page.goto(config.baseUrl);
     await use(loginPage);
   },
+  shoppingPage: async ({ page }, use) => {
+      const shoppingPage = new ShoppingPage(page);
+      await use(shoppingPage);
+    },
 });
+
 
 export { expect };
