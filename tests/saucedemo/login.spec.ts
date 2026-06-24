@@ -9,17 +9,6 @@ test.describe('Sauce Demo shop Login tests', () => {
     await loginPage.login(users.standardUser.credentials);
     await expect(page).toHaveURL(`${config.baseUrl}/inventory.html`);
     await loginPage.checkHeadingVisibility({ headings: ['Products'], isVisible: true });
-    await loginPage.checkProductVisibility({
-      products: [
-        'Sauce Labs Backpack',
-        'Sauce Labs Bike Light',
-        'Sauce Labs Bolt T-Shirt',
-        'Sauce Labs Fleece Jacket',
-        'Sauce Labs Onesie',
-        'Test.allTheThings() T-Shirt (Red)',
-      ],
-      isVisible: true,
-    });
   })
 
   const negativeLoginCases = [

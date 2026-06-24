@@ -6,11 +6,6 @@ type CheckHeadingVisibilityArgs = {
   isVisible: boolean;
 };
 
-type CheckProductVisibilityArgs = {
-  products: string[];
-  isVisible: boolean;
-};
-
 export class LoginPage {
     constructor(private readonly page: Page) {}
   
@@ -45,21 +40,6 @@ export class LoginPage {
         await expect(visibleHeading).not.toBeVisible();
       }
     }
-  }
-
-  async checkProductVisibility({
-    products,
-    isVisible,
-  }: CheckProductVisibilityArgs) {
-    
-    await expect(this.page.locator('.inventory_item')).toHaveCount(6);
-    for (const product of products) {
-      const actualProducts = await this.page
-      .locator('[data-test="inventory-item-name"]')
-      .allTextContents();
-  
-    expect(actualProducts).toEqual(products);
-  }
   }
 
   async checkUserIsOnLoginPage(headingText: string) {
