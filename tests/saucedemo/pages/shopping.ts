@@ -67,16 +67,49 @@ export class ShoppingPage {
         }
       }
 
-      async removeInventoryItemFromCart(itemName: string){
+      async removeItemFromInventory(itemName: string){
         const selectItem = this.page.locator('.inventory_item', {
             hasText: itemName,
           });
         await selectItem.getByRole('button', { name: 'Remove' }).click();
     }
 
-    async removeMultipleInventoryItemsToCart(items: string[]) {
+    async removeMultipleInventoryItems(items: string[]) {
         for (const item of items) {
-          await this.removeInventoryItemFromCart(item);
+          await this.removeItemFromInventory(item);
         }
+      }
+
+      async checkCartContainsItem(itemName: string) {
+        await expect(
+          this.page.locator('[data-test="inventory-item-name"]', {
+            hasText: itemName,
+          })
+        ).toBeVisible();
+      }
+
+      async checkCartContainsMultipleItems(items: string[]) {
+        for (const item of items) {
+          await this.checkCartContainsItem(item);
+        }
+      }
+
+      async checkCartIsEmpty() {
+        await expect(this.page.locator('.cart_item')).toHaveCount(0);
+        await expect(this.page.locator('[data-test="shopping-cart-badge"]')).toHaveCount(0);
+      }
+
+      async removeItemFromCartPage(itemName: string) {
+        const cartItem = this.page.locator('.cart_item', {
+          hasText: itemName,
+        });
+      
+        await cartItem.getByRole('button', { name: 'Remove' }).click();
+      }
+
+      async removeMultipleItemsFromCartPage(items: string []){
+        for (const item of items) {
+            await this.removeItemFromCartPage(item);
+          }
       }
 }
