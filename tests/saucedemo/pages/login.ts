@@ -54,4 +54,26 @@ export class LoginPage {
     await expect(this.page.locator('[data-test="error"]'))
   .toHaveText(errorMessage);
   }
+
+  async checkPasswordIsMasked() {
+    await expect(this.password).toHaveAttribute('type', 'password');
+  }
+  
+  async loginWithEnterKey(credentials: Credentials) {
+    await this.username.fill(credentials.username);
+    await this.password.fill(credentials.password);
+    await this.password.press('Enter');
+  }
+
+  async checkUrlLocation(url: string){
+    await expect(this.page).toHaveURL(url);
+  }
+
+  async reloadPage() {
+    await this.page.reload();
+  }
+
+  async goToURL(url: string) {
+    await this.page.goto(url)
+  }
 }
