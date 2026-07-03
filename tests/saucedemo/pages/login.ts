@@ -64,4 +64,16 @@ export class LoginPage {
     await this.password.fill(credentials.password);
     await this.password.press('Enter');
   }
+
+  async checkUrlLocation(url: string){
+    await expect(this.page).toHaveURL(url);
+  }
+
+  async reloadPage() {
+    await this.page.reload();
+  }
+
+  async goToURL(url: string) {
+    await this.page.goto(url)
+  }
 }

@@ -21,7 +21,7 @@ test.describe('Sauce Demo shop Login tests', () => {
     for (const { name, credentials } of positiveLoginCases) {
       test(`User ${name} can successfully log in: Expect to see products page`, async ({ page, loginPage }) => {
         await loginPage.login(credentials);
-        await expect(page).toHaveURL(`${config.baseUrl}/inventory.html`);
+        await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
         await loginPage.checkHeadingVisibility({ headings: ['Products'], isVisible: true });
       });
     }
@@ -69,7 +69,7 @@ test.describe('Sauce Demo shop Login tests', () => {
     for (const { name, credentials, error } of negativeLoginCases) {
       test(`Login fails when ${name}`, async ({ page, loginPage }) => {
         await loginPage.login(credentials);
-        await expect(page).toHaveURL(`${config.baseUrl}`);
+        await loginPage.checkUrlLocation(`${config.baseUrl}`);
         await loginPage.checkUserIsOnLoginPage('Swag Labs');
         await loginPage.checkErrorMessage(error);
       });
@@ -81,12 +81,32 @@ test.describe('Sauce Demo shop Login tests', () => {
       await loginPage.checkPasswordIsMasked();
     });
 
-    test('Error message updates after correcting credentials and retrying', async ({ page, loginPage }) => {
+    test('Error message updates after correcting credentials and retrying', async ({ loginPage }) => {
       await loginPage.login(users.incorrectCredentials.credentials);
       await loginPage.checkErrorMessage(
         matchCredentialsError
       );
       await loginPage.login(users.standardUser.credentials);
-      await expect(page).toHaveURL(`${config.baseUrl}/inventory.html`);
+      await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
     });
-})});
+})
+
+test.describe('Session and navigation', () => {
+  test('Unauthenticated user hitting inventory directly is redirected to login', async ({ loginPage }) => {
+    await loginPage.goToURL(`${config.baseUrl}/inventory.html`);
+    await loginPage.checkUserIsOnLoginPage('Swag Labs');
+  });
+
+  test('Session persists after page refresh', async ({ loginPage }) => {
+    await loginPage.login(users.standardUser.credentials);
+    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+    await loginPage.reloadPage();
+    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+  });
+
+  test('Enter key submits the login form', async ({ page, loginPage }) => {
+    await loginPage.loginWithEnterKey(users.standardUser.credentials);
+    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+  });
+});
+});
