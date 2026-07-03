@@ -91,5 +91,45 @@ export const users: { [key:string]: User } = {
             lastName: "User",
             zipCode: ""
         },
-    }
+    },
+    usernameOnly: {
+        credentials: { username: 'standard_user', password: '' },
+        account: {
+            firstName: "UserName",
+            lastName: "Only",
+            zipCode: ""
+        },
+      },
+      passwordOnly: {
+        credentials: { username: '', password: 'secret_sauce' },
+        account: {
+            firstName: "Password",
+            lastName: "Only",
+            zipCode: ""
+        },
+      },
+      wrongCaseCredentials: {
+        credentials: { username: 'Standard_User', password: 'secret_sauce' },
+        account: {
+            firstName: "WrongCase",
+            lastName: "Creds",
+            zipCode: ""
+        },
+      },
+      sqlInjectionCredentials: {
+        credentials: { username: "' OR '1'='1", password: "' OR '1'='1" },
+        account: {
+            firstName: "SQL",
+            lastName: "Inj",
+            zipCode: ""
+        },
+      },
+      whitespaceCredentials: {
+        credentials: { username: '   ', password: '   ' },
+        account: {
+            firstName: "WhiteSpace",
+            lastName: "Creds",
+            zipCode: ""
+        },
+      },
 }
