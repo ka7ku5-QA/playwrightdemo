@@ -6,7 +6,7 @@ export const users: { [key:string]: User } = {
     standardUser: {
         credentials: {
             username: "standard_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "standard",
@@ -40,7 +40,7 @@ export const users: { [key:string]: User } = {
     lockedOutUser: {
         credentials: {
             username: "locked_out_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "locked_out",
@@ -51,7 +51,7 @@ export const users: { [key:string]: User } = {
     problemUser: {
         credentials: {
             username: "problem_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "Problem",
@@ -62,7 +62,7 @@ export const users: { [key:string]: User } = {
     performanceGlitchUser: {
         credentials: {
             username: "performance_glitch_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "Performance_glitch",
@@ -73,7 +73,7 @@ export const users: { [key:string]: User } = {
     errorUser: {
         credentials: {
             username: "error_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "Error",
@@ -84,7 +84,7 @@ export const users: { [key:string]: User } = {
     visualUser: {
         credentials: {
             username: "visual_user",
-            password: password
+            password: password,
         },
         account: {
             firstName: "Visual",
@@ -93,7 +93,10 @@ export const users: { [key:string]: User } = {
         },
     },
     usernameOnly: {
-        credentials: { username: 'standard_user', password: '' },
+        credentials: { 
+            username: 'standard_user', 
+            password: '' 
+        },
         account: {
             firstName: "UserName",
             lastName: "Only",
@@ -101,7 +104,10 @@ export const users: { [key:string]: User } = {
         },
       },
       passwordOnly: {
-        credentials: { username: '', password: 'secret_sauce' },
+        credentials: { 
+            username: '',
+            password: password, 
+        },
         account: {
             firstName: "Password",
             lastName: "Only",
@@ -109,7 +115,10 @@ export const users: { [key:string]: User } = {
         },
       },
       wrongCaseCredentials: {
-        credentials: { username: 'Standard_User', password: 'secret_sauce' },
+        credentials: { 
+            username: 'Standard_User', 
+            password: password, 
+        },
         account: {
             firstName: "WrongCase",
             lastName: "Creds",
@@ -117,7 +126,10 @@ export const users: { [key:string]: User } = {
         },
       },
       sqlInjectionCredentials: {
-        credentials: { username: "' OR '1'='1", password: "' OR '1'='1" },
+        credentials: {
+            username: "' OR '1'='1", 
+            password: "' OR '1'='1" 
+        },
         account: {
             firstName: "SQL",
             lastName: "Inj",
@@ -125,7 +137,10 @@ export const users: { [key:string]: User } = {
         },
       },
       whitespaceCredentials: {
-        credentials: { username: '   ', password: '   ' },
+        credentials: { 
+            username: '   ', 
+            password: '   ' 
+        },
         account: {
             firstName: "WhiteSpace",
             lastName: "Creds",
