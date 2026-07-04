@@ -1,32 +1,14 @@
 import { Page, expect } from '@playwright/test';
 import { Credentials } from '../credentials';
+import { SharedPage } from './shared';
 
 type CheckHeadingVisibilityArgs = {
   headings: string[];
   isVisible: boolean;
 };
 
-export class LoginPage {
-    constructor(private readonly page: Page) {}
-  
-    get username() {
-      return this.page.getByPlaceholder('Username');
-    }
-  
-    get password() {
-      return this.page.getByPlaceholder('Password');
-    }
-  
-    get loginButton() {
-      return this.page.getByRole('button', { name: 'Login' });
-    }
-  
-  async login(credentials: Credentials) {
-    await this.username.fill(credentials.username);
-    await this.password.fill(credentials.password);
-    await this.loginButton.click();
-  }
-
+export class LoginPage extends SharedPage {
+    
   async checkHeadingVisibility({
     headings,
     isVisible,
@@ -65,15 +47,4 @@ export class LoginPage {
     await this.password.press('Enter');
   }
 
-  async checkUrlLocation(url: string){
-    await expect(this.page).toHaveURL(url);
-  }
-
-  async reloadPage() {
-    await this.page.reload();
-  }
-
-  async goToURL(url: string) {
-    await this.page.goto(url)
-  }
 }

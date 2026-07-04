@@ -1,11 +1,10 @@
-import { test, expect } from './fixtures/fixture';
+import { test } from './fixtures/fixture';
 import { config } from './config';
 import { users } from './data/users';
 
 const matchCredentialsError = 'Epic sadface: Username and password do not match any user in this service'
 
 test.describe('Sauce Demo shop Login tests', () => {
-  
   const positiveLoginCases = [
     {
       name: 'standard user',
@@ -19,7 +18,7 @@ test.describe('Sauce Demo shop Login tests', () => {
 
   test.describe('Positive login scenarios', () => {
     for (const { name, credentials } of positiveLoginCases) {
-      test(`User ${name} can successfully log in: Expect to see products page`, async ({ page, loginPage }) => {
+      test(`log in as ${name}: expect to see products page`, async ({ loginPage }) => {
         await loginPage.login(credentials);
         await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
         await loginPage.checkHeadingVisibility({ headings: ['Products'], isVisible: true });
@@ -64,10 +63,10 @@ test.describe('Sauce Demo shop Login tests', () => {
       error: matchCredentialsError
     },
   ];
-  
+
   test.describe('Negative login scenarios', () => {
     for (const { name, credentials, error } of negativeLoginCases) {
-      test(`Login fails when ${name}`, async ({ page, loginPage }) => {
+      test(`log in with ${name}: expect login to fail with error message`, async ({ loginPage }) => {
         await loginPage.login(credentials);
         await loginPage.checkUrlLocation(`${config.baseUrl}`);
         await loginPage.checkUserIsOnLoginPage('Swag Labs');
@@ -77,11 +76,11 @@ test.describe('Sauce Demo shop Login tests', () => {
   });
 
   test.describe('UI behavior', () => {
-    test('Password field masks input', async ({ loginPage }) => {
+    test('view password field: expect input to be masked', async ({ loginPage }) => {
       await loginPage.checkPasswordIsMasked();
     });
 
-    test('Error message updates after correcting credentials and retrying', async ({ loginPage }) => {
+    test('correct credentials after failed login attempt: expect successful login', async ({ loginPage }) => {
       await loginPage.login(users.incorrectCredentials.credentials);
       await loginPage.checkErrorMessage(
         matchCredentialsError
@@ -89,24 +88,24 @@ test.describe('Sauce Demo shop Login tests', () => {
       await loginPage.login(users.standardUser.credentials);
       await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
     });
-})
+  })
 
-test.describe('Session and navigation', () => {
-  test('Unauthenticated user hitting inventory directly is redirected to login', async ({ loginPage }) => {
-    await loginPage.goToURL(`${config.baseUrl}/inventory.html`);
-    await loginPage.checkUserIsOnLoginPage('Swag Labs');
-  });
+  test.describe('Session and navigation', () => {
+    test('navigate to inventory page while unauthenticated: expect redirect to login page', async ({ loginPage }) => {
+      await loginPage.goToURL(`${config.baseUrl}/inventory.html`);
+      await loginPage.checkUserIsOnLoginPage('Swag Labs');
+    });
 
-  test('Session persists after page refresh', async ({ loginPage }) => {
-    await loginPage.login(users.standardUser.credentials);
-    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
-    await loginPage.reloadPage();
-    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
-  });
+    test('refresh page after logging in: expect session to persist', async ({ loginPage }) => {
+      await loginPage.login(users.standardUser.credentials);
+      await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+      await loginPage.reloadPage();
+      await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+    });
 
-  test('Enter key submits the login form', async ({ page, loginPage }) => {
-    await loginPage.loginWithEnterKey(users.standardUser.credentials);
-    await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+    test('submit login form with Enter key: expect successful login', async ({ loginPage }) => {
+      await loginPage.loginWithEnterKey(users.standardUser.credentials);
+      await loginPage.checkUrlLocation(`${config.baseUrl}/inventory.html`);
+    });
   });
-});
 });
