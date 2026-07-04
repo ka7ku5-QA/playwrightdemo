@@ -1,102 +1,121 @@
-Current status: Actively expanding Playwright experience while leveraging 6.5+ years of commercial automation testing experience with TestCafe and TypeScript.
+# Playwright Test Automation Portfolio
 
+![Playwright Tests](https://github.com/ka7ku5-QA/playwrightdemo/actions/workflows/playwright.yml/badge.svg)
 
-# Playwright Demo Project
+A demonstration of end-to-end test automation using **Playwright** and **TypeScript**, built while transitioning from 6.5+ years of commercial automation experience with **TestCafe**.
 
-## Overview
+## About
 
-This repository serves as a demonstration of my automation testing skills using Playwright and TypeScript.
+This isn't a production test suite — it's a focused project to show recruiters and interviewers how I approach test automation: design, structure, and maintainability, now applied through Playwright rather than TestCafe.
 
-For the past 6.5 years, I have worked predominantly with TestCafe as my primary end-to-end automation framework, designing, developing, and maintaining large-scale automated test suites across multiple projects and teams.
+The core engineering principles carry over regardless of framework:
+- Maintainable, reusable test architecture
+- Reliable assertions and validation strategies
+- Data-driven testing
+- Reduced duplication via Page Object Model
+- Scalable project structure
 
-As the industry has increasingly adopted Playwright as the preferred modern automation framework, I have been actively transferring and applying my existing automation engineering skills to Playwright. The purpose of this repository is to demonstrate that transition and showcase my ability to work confidently with Playwright, TypeScript, and modern test automation practices.
+The application under test is [SauceDemo](https://www.saucedemo.com/), a standard practice site for automation demos.
 
-## Purpose of This Repository
+## Tech Stack
 
-This is not intended to be a comprehensive test suite for a production application. Instead, it is a focused demonstration project designed to show recruiters, hiring managers, and technical interviewers how I approach:
+- **Framework:** Playwright
+- **Language:** TypeScript (strong typing, interfaces, ES6+)
+- **Runner:** Playwright Test (fixtures, parallel execution)
+- **Pattern:** Page Object Model
+- **CI:** GitHub Actions
 
-* End-to-end test automation
-* Test design and organisation
-* Page Object Model implementation
-* TypeScript development
-* Reusable test architecture
-* Data-driven testing
-* Assertions and validation strategies
-* Maintainable automation code
+## Project Structure
 
-The application under test is Sauce Demo, a commonly used test application for automation examples and framework demonstrations.
+```
+playwrightdemo/
+├── tests/
+│   └── saucedemo/          # UI test specs
+├── pages/                  # Page object classes
+├── .github/workflows/      # CI pipeline config
+├── playwright.config.ts
+├── package.json
+└── README.md
+```
 
-## Background
+## What's Covered
 
-While the framework itself has changed, the core automation engineering principles remain the same:
+- Login (valid / invalid credentials)
+- Product listing & sorting
+- Cart operations
+- Checkout flow
 
-* Creating maintainable test suites
-* Building reusable abstractions
-* Writing reliable assertions
-* Reducing test duplication
-* Managing test data effectively
-* Designing scalable automation frameworks
+## Sample
 
-My experience with TestCafe has provided a strong foundation in these areas, and this project demonstrates how those skills translate naturally into Playwright.
+Data-driven negative login scenarios, using a shared fixture and page object:
 
-## What This Project Demonstrates
+```typescript
+const negativeLoginCases = [
+  {
+    name: 'incorrect credentials',
+    credentials: users.incorrectCredentials.credentials,
+    error: matchCredentialsError,
+  },
+  {
+    name: 'locked out user',
+    credentials: users.lockedOutUser.credentials,
+    error: 'Epic sadface: Sorry, this user has been locked out.',
+  },
+  {
+    name: 'missing password',
+    credentials: users.usernameOnly.credentials,
+    error: 'Epic sadface: Password is required',
+  },
+  // ...plus missing-username, incorrect casing, and SQL-injection-style input cases
+];
 
-### TypeScript Usage
+test.describe('Negative login scenarios', () => {
+  for (const { name, credentials, error } of negativeLoginCases) {
+    test(`Login fails when ${name}`, async ({ loginPage }) => {
+      await loginPage.login(credentials);
+      await loginPage.checkUrlLocation(`${config.baseUrl}`);
+      await loginPage.checkUserIsOnLoginPage('Swag Labs');
+      await loginPage.checkErrorMessage(error);
+    });
+  }
+});
+```
 
-The framework is written using TypeScript, leveraging:
+See [`tests/saucedemo/login.spec.ts`](./tests/saucedemo/login.spec.ts) for the full suite, including session persistence, direct-URL redirect, and keyboard-submission checks.
 
-* Strong typing
-* Interfaces and reusable types
-* Modern ES6+ features
-* Maintainable project structure
+## Getting Started
 
-### Playwright Features
+```bash
+git clone https://github.com/ka7ku5-QA/playwrightdemo.git
+cd playwrightdemo
+npm install
+npx playwright install
+```
 
-Examples include:
+## Running Tests
 
-* Fixtures
-* Page Objects
-* Locators
-* Assertions
-* Test configuration
-* Parallel execution support
-* Data-driven testing patterns
+```bash
+npx playwright test              # run all tests, headless
+npx playwright test --headed     # run with browser UI visible
+npx playwright test --ui         # run in Playwright's UI mode
+npx playwright show-report       # view the last HTML report
+```
 
-### Test Design Principles
+## CI & Reports
 
-The repository aims to demonstrate:
+Every push and pull request runs the full suite via GitHub Actions. The latest HTML report is published here:
 
-* Readable test cases
-* Reusable helper methods
-* Separation of concerns
-* Reduced code duplication
-* Scalable framework architecture
+**[View latest test report →](https://ka7ku5-qa.github.io/playwrightdemo/)**
 
-## Why Playwright?
+## Roadmap
 
-Playwright has become one of the leading end-to-end testing frameworks due to its:
+- [ ] REST API test coverage (auth, CRUD, schema validation)
+- [ ] Cross-browser matrix (Chromium / Firefox / WebKit)
 
-* Excellent browser support
-* Reliability
-* Speed
-* Powerful locator strategy
-* First-class TypeScript support
-* Modern testing capabilities
+## Why Playwright
 
-As organisations increasingly adopt Playwright, I have invested time in ensuring my existing automation expertise transfers effectively into the framework.
-
-## Notes for Recruiters and Hiring Managers
-
-This repository should be viewed as evidence of:
-
-* Strong automation testing fundamentals
-* Ability to learn and adopt new frameworks
-* Practical Playwright knowledge
-* TypeScript proficiency
-* Framework design and maintenance skills
-
-Although my commercial experience has primarily been with TestCafe, this project demonstrates my ability to work comfortably and effectively within a Playwright-based automation environment.
+Strong browser support, speed, reliability, and first-class TypeScript support have made it one of the leading E2E frameworks — this project reflects the time I've invested applying my existing automation fundamentals to it.
 
 ## Contact
 
-If you would like to discuss any aspect of the framework, automation approach, or my experience transitioning between automation tools, please feel free to reach out.
+Happy to discuss the framework, my automation approach, or the TestCafe → Playwright transition — [https://www.linkedin.com/in/marc-cocklin-8324b088/] / [marc1157@hotmail.co.uk].
