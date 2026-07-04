@@ -16,6 +16,7 @@ export const test = base.extend<MyFixtures>({
   },
   shoppingPage: async ({ page }, use) => {
       const shoppingPage = new ShoppingPage(page);
+      await page.goto(config.baseUrl);
       await use(shoppingPage);
     },
 });
