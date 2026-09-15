@@ -205,6 +205,6 @@ export class ShoppingPage extends SharedPage {
       }
       
       async addToCartFromDetailPage() {
-        await this.page.getByRole('button', { name: 'Add to cart' }).click();
+        await this.page.locator('.inventory_details').getByRole('button', { name: 'Add to cart' }).click();
       }
 }
