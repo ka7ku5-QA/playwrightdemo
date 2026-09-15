@@ -156,6 +156,7 @@ export class ShoppingPage extends SharedPage {
       
       async openProductDetail(itemName: string) {
         await this.page.locator('[data-test="inventory-item-name"]', { hasText: itemName }).click();
+        await this.page.waitForURL(/inventory-item\.html\?id=\d+/);
       }
       
       async checkProductDetailPage(expectedName: string, expectedPrice: string) {
@@ -204,6 +205,6 @@ export class ShoppingPage extends SharedPage {
       }
       
       async addToCartFromDetailPage() {
-        await this.page.getByRole('button', { name: 'Add to cart' }).click();
+        await this.page.locator('.inventory_details').getByRole('button', { name: 'Add to cart' }).click();
       }
 }

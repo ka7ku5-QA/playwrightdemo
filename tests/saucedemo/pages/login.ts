@@ -28,7 +28,7 @@ export class LoginPage extends SharedPage {
     await expect(
       this.page.locator('.login_logo')
     ).toHaveText(headingText);
-    await expect(this.page.locator('[data-test="login-container"]').isVisible)
+    await expect(this.page.locator('[data-test="login-container"]')).toBeVisible();
   }
 
 

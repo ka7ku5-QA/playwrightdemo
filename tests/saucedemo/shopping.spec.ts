@@ -175,7 +175,6 @@ test.describe('Sauce Demo shop shopping tests', () => {
       const price = await shoppingPage.getInventoryItemPrice(selectedItem);
 
       await shoppingPage.openProductDetail(selectedItem);
-      await shoppingPage.checkUrlLocation(/inventory-item\.html\?id=\d+/);
       await shoppingPage.checkProductDetailPage(selectedItem, price);
     });
 
