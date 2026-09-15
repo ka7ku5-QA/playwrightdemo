@@ -156,6 +156,7 @@ export class ShoppingPage extends SharedPage {
       
       async openProductDetail(itemName: string) {
         await this.page.locator('[data-test="inventory-item-name"]', { hasText: itemName }).click();
+        await this.page.waitForURL(/inventory-item\.html\?id=\d+/);
       }
       
       async checkProductDetailPage(expectedName: string, expectedPrice: string) {
